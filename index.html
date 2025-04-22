@@ -3,29 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adicionando Contato Mage Technology...</title> <script async src="https://www.googletagmanager.com/gtag/js?id=G-K9GNQF01V9"></script>
+    <title>Adicionando Contato Mage Technology...</title>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K9GNQF01V9"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-K9GNQF01V9'); 
+      // Configuração do GA4 - Isso já envia um evento 'page_view' automaticamente
+      gtag('config', 'G-K9GNQF01V9');
 
-      // Redirecionamento para o arquivo VCF
-      function redirectToVCF() {
-        // *** USE A URL CORRETA AQUI ***
-        const vcfUrl = 'https://MageTechnology.github.io/cartao-visita-tracker/contatomage.vcf';
-        window.location.href = vcfUrl;
+      // Função para tentar o download do VCF
+      function attemptVcfDownload() {
+        const downloadLink = document.getElementById('vcfDownloadLink');
+        if (downloadLink) {
+          console.log('Tentando download do VCF via clique simulado...');
+          // Simula o clique no link de download visível
+          downloadLink.click();
+          // Atualiza a mensagem após tentar o clique
+           document.getElementById('statusMessage').innerText = 'Tentativa de download iniciada. Verifique sua pasta de downloads ou notificações.';
+        } else {
+          console.error('Elemento do link de download não encontrado.');
+           document.getElementById('statusMessage').innerText = 'Erro: Link de download não encontrado. Por favor, use o link abaixo manualmente.';
+        }
       }
 
-      // Espera um pouco para dar tempo ao GA4 de registrar o hit e então redireciona
-      setTimeout(redirectToVCF, 500); // Atraso de 500ms (0.5 segundos)
+      // Aguarda um curto período para dar tempo ao GA4 enviar o pageview
+      // e então tenta iniciar o download automaticamente.
+      // Aumentar um pouco o tempo pode ajudar (ex: 750ms ou 1000ms)
+      console.log('Agendando tentativa de download do VCF...');
+      setTimeout(attemptVcfDownload, 750); // Atraso de 750ms (0.75 segundos)
+
     </script>
+    <!-- Estilos básicos para melhor aparência -->
     <style>
-      body { font-family: sans-serif; text-align: center; padding-top: 50px; }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        text-align: center;
+        padding: 40px 20px;
+        background-color: #f4f4f4;
+        color: #333;
+        line-height: 1.6;
+      }
+      p {
+        margin-bottom: 15px;
+      }
+      a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+        background-color: #e7f3ff;
+        padding: 8px 15px;
+        border-radius: 5px;
+        border: 1px solid #a7cfff;
+        display: inline-block; /* Para o padding funcionar bem */
+        transition: background-color 0.2s ease;
+      }
+      a:hover {
+        background-color: #d0e7ff;
+        text-decoration: none;
+      }
+      #statusMessage {
+        font-size: 1.1em;
+        color: #555;
+      }
+      .instructions {
+          font-size: 0.9em;
+          color: #666;
+          margin-top: 25px;
+      }
     </style>
 </head>
 <body>
-    <p>Aguarde, estamos adicionando o contato da Mage Technology à sua agenda...</p>
-    <p><a href="https://MageTechnology.github.io/cartao-visita-tracker/contatomage.vcf">Se o download não iniciar automaticamente, clique aqui.</a></p>
+    <p id="statusMessage">Aguarde, preparando o contato da Mage Technology para adicionar à sua agenda...</p>
+
+    <p>
+        <!-- Este é o link que será clicado via JS e também serve de fallback -->
+        <a id="vcfDownloadLink"
+           href="https://MageTechnology.github.io/cartao-visita-tracker/contatomage.vcf"
+           download="MageTechnologyContato.vcf"> <!-- O atributo 'download' é crucial! -->
+            Se o download não iniciar automaticamente, clique aqui para baixar o contato (VCF).
+        </a>
+    </p>
+
+    <p class="instructions">
+        Após baixar o arquivo (.vcf), talvez seja necessário abri-lo manualmente para adicionar o contato à sua agenda.
+    </p>
 </body>
 </html>
